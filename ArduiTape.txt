@@ -1,0 +1,56 @@
+Pins:
+   00 -> NC
+   01 -> NC
+   02 -> LCD DB7
+   03 -> LCD DB6
+   04 -> LCD DB5
+   05 -> LCD DB4
+   06 -> MOTOR CONTROL (Connected to one side of the 2.5mm socket)
+   07 -> BUTTON (MOTOR CONTROL ON/OFF)
+   08 -> NC
+   09 -> PWM AUDIO OUT
+   10 -> SDCS (SD Card chip select)
+   11 -> MOSI (SD Card MOSI PIN)
+   12 -> MISO (SD Card MI PIN)
+   13 -> SCK (SD Card SCK PIN)
+A0 14 -> LCD RS
+A1 15 -> LCD E
+A2 16 -> BUTTON (DOWN)
+A3 17 -> BUTTON (UP)
+A4 18 -> BUTTON (STOP)
+A5 19 -> BUTTON (PLAY)
+
+
+LCD PINS:
+BL1 -> 3.3V
+BL2 -> 0V
+VSS -> 0V
+VDD -> 5V
+ V0 -> WIPER OF 100K POT
+ RS -> A0 (14) ARDUINO
+R/W -> 0V
+  E -> A1 (15) ARDUINO
+DB0 -> NC
+DB1 -> NC
+DB2 -> NC
+DB3 -> NC
+DB4 -> 5 ARDUINO
+DB5 -> 4 ARDUINO
+DB6 -> 3 ARDUINO
+DB7 -> 2 ARDUINO
+
+SD CARD PINS:
+ GND -> GND
+3.3V -> NC
+  5V -> 5V
+SDCS -> 10 ARDUINO
+MOSI -> 11 ARDUINO
+ SCK -> 13 ARDUINO
+MISO -> 12 ARDUINO
+ GND -> GND
+
+3 x 4.7nF & 4.7k ohm Low Pass Filter
+100nF & 4.7k ohm dc filter
+
+5v audio amp, salvaged from old CD drive.
+
