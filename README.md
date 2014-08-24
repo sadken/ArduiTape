@@ -18,5 +18,5 @@ while motor control is turned on.
 
 The headphone amp used was taken from an old CD drive (the kind that had a volume control and headphone socket on it). 
 The one i used had an LM4808 chip on it, and was quite easy to find solder points for the relevant pins. 
-Although any 5v headphone could be used in its place. 
+Although any 5v headphone amplifier could be used in its place. 
 
