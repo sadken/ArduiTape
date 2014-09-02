@@ -10,6 +10,87 @@
 
 LiquidCrystal lcd(14,15,5,4,3,2); //These can be moved about if needed
 
+//Custom LCD Characters (just for fun)
+byte tanim1[8] = {
+	0b00000,
+	0b01110,
+	0b00100,
+	0b00100,
+	0b00100,
+	0b01110,
+	0b00000,
+	0b00000
+};
+byte tanim2[8] = {
+	0b00000,
+	0b00110,
+	0b00011,
+	0b10101,
+	0b11000,
+	0b01100,
+	0b00000,
+	0b00000
+};
+byte tanim3[8] = {
+	0b00000,
+	0b00000,
+	0b10001,
+	0b11111,
+	0b10001,
+	0b00000,
+	0b00000,
+	0b00000
+};
+byte tanim4[8] = {
+	0b00000,
+	0b01100,
+	0b11000,
+	0b10101,
+	0b00011,
+	0b00110,
+	0b00000,
+	0b00000
+};
+byte tanim5[8] = {
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00011
+};
+byte tanim6[8] = {
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00110
+};
+byte tanim7[8] = {
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B01100
+};
+byte tanim8[8] = {
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B11000
+};
 TMRpcm tmrpcm;   //Initialise tmrpcm
 
 SdFat sd;    //Initialise Sd card 
@@ -46,10 +127,21 @@ int pauseOn = 0;     //Pause state
 int currentFile = 1; //Current position in directory
 int maxFile = 0;     //Total number of files in directory
 int isDir = 0;       //Is the current file a directory
+byte canim = 0;       // Animation Frame
+unsigned long tanim = 0;       // Animation Timer
 unsigned long timeDiff = 0;  //button debounce
 unsigned long timePress = 0; //button debounce
 
 void setup() {
+  lcd.createChar(0, tanim1);
+  lcd.createChar(1, tanim2);
+  lcd.createChar(2, tanim3);
+  lcd.createChar(3, tanim4);
+  lcd.createChar(4, tanim5);
+  lcd.createChar(5, tanim6);
+  lcd.createChar(6, tanim7);
+  lcd.createChar(7, tanim8);
+  
   lcd.begin(16,2);  //Initialise LCD (16x2 type)
   pinMode(chipSelect, OUTPUT); //Setup SD card chipselect pin
   if (!sd.begin(chipSelect,cardType)) {  //Start SD card and check it's working
@@ -84,6 +176,19 @@ void loop(void) {
     stopFile();
     //if the file has finished stop trying to play the file
   }
+  if(tmrpcm.isPlaying() && pauseOn==0) {
+    if(millis() - tanim > 500) {
+      tanim = millis();
+      canim++;
+      if(canim>=4) { canim=0; }
+      lcd.setCursor(12,0);
+      lcd.write(canim);
+      lcd.setCursor(13,0);
+      lcd.write(canim+4);
+      lcd.setCursor(14,0);
+      lcd.write(canim);
+    }
+  }
   motorState=digitalRead(btnMotor);
   if (millis() - timeDiff > 50) { // check switch every 100ms 
      timeDiff = millis(); // get current millisecond count
@@ -104,6 +209,12 @@ void loop(void) {
               lcd_clearline(0);
               lcd.print("Paused");
               pauseOn = 1;
+              lcd.setCursor(12,0);
+              lcd.write(canim);
+              lcd.setCursor(13,0);
+              lcd.write(canim+4);
+              lcd.setCursor(14,0);
+              lcd.write(canim);
             } else {
               lcd_clearline(0);
               lcd.print("Playing");
